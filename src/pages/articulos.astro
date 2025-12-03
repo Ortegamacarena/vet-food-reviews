@@ -1,0 +1,134 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import articlesData from '@/data/articles.json';
+---
+
+<Layout title="Reviews de Comida | PetFood Expert">
+  <section class="bg-gradient-to-b from-secondary/50 to-background py-12">
+    <div class="container">
+      <div class="text-center">
+        <h1 class="text-4xl md:text-5xl font-heading font-bold mb-4">
+          Reviews de Comida
+        </h1>
+        <p class="text-muted-foreground max-w-2xl mx-auto mb-8">
+          Análisis detallados y honestos de los mejores piensos y alimentos para tu mascota.
+        </p>
+
+        <div class="flex justify-center gap-2">
+          <button data-filter="all" class="filter-btn active px-4 py-2 rounded-lg font-medium transition-all duration-200">
+            Todos
+          </button>
+          <button data-filter="perro" class="filter-btn px-4 py-2 rounded-lg font-medium transition-all duration-200">
+            🐕 Perros
+          </button>
+          <button data-filter="gato" class="filter-btn px-4 py-2 rounded-lg font-medium transition-all duration-200">
+            🐈 Gatos
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12">
+    <div class="container">
+      <p id="count-display" class="text-muted-foreground mb-6">
+        {articlesData.length} reviews encontrados
+      </p>
+      <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {articlesData.map((article) => (
+          <article class="group article-card" data-pet-type={article.petType}>
+            <a href={`/analisis/${article.slug}`}>
+              <div class="bg-card rounded-2xl overflow-hidden card-hover border border-border">
+                <div class="relative h-48 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
+                  <span class="text-7xl group-hover:scale-110 transition-transform duration-300">
+                    {article.image}
+                  </span>
+                  <div class="absolute top-4 left-4">
+                    <span class={`inline-flex items-center gap-1 rounded-full font-medium text-sm px-3 py-1 ${
+                      article.petType === 'perro' ? 'bg-dog-light text-dog' : 'bg-cat-light text-cat'
+                    }`}>
+                      <span>{article.petType === 'perro' ? '🐕' : '🐈'}</span>
+                      <span class="capitalize">{article.petType}</span>
+                    </span>
+                  </div>
+                  <div class="absolute top-4 right-4">
+                    <span class="bg-background/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium text-muted-foreground">
+                      {article.category}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="p-5">
+                  <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-1">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <svg key={i} class={`h-3 w-3 ${i < Math.floor(article.rating) ? 'text-rating-star fill-rating-star' : 'text-muted-foreground/30'}`} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                      ))}
+                      <span class="font-semibold text-foreground ml-1 text-sm">{article.rating.toFixed(1)}</span>
+                    </div>
+                    <span class="flex items-center gap-1 text-xs text-muted-foreground">
+                      <svg class="h-3 w-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      {article.readTime} min
+                    </span>
+                  </div>
+
+                  <h3 class="font-heading font-semibold text-lg mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                    {article.title}
+                  </h3>
+
+                  <p class="text-sm text-muted-foreground line-clamp-2 mb-4">
+                    {article.excerpt}
+                  </p>
+
+                  <span class="inline-flex items-center gap-1 text-sm font-medium text-primary group-hover:gap-2 transition-all">
+                    Leer análisis
+                    <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  </span>
+                </div>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .filter-btn {
+    @apply text-muted-foreground hover:text-foreground hover:bg-muted;
+  }
+  .filter-btn.active {
+    @apply bg-primary/10 text-primary;
+  }
+</style>
+
+<script>
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const articles = document.querySelectorAll('.article-card');
+  const countDisplay = document.getElementById('count-display');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.getAttribute('data-filter');
+      let visibleCount = 0;
+
+      articles.forEach(article => {
+        const petType = article.getAttribute('data-pet-type');
+        if (filter === 'all' || petType === filter) {
+          article.style.display = 'block';
+          visibleCount++;
+        } else {
+          article.style.display = 'none';
+        }
+      });
+
+      if (countDisplay) {
+        countDisplay.textContent = `${visibleCount} reviews encontrados`;
+      }
+    });
+  });
+</script>

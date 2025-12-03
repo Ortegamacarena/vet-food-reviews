@@ -1,0 +1,69 @@
+---
+import authorData from '@/data/author.json';
+
+const stats = [
+  { icon: 'BookOpen', value: authorData.stats.reviewsWritten, label: 'Reviews' },
+  { icon: 'Award', value: authorData.stats.yearsExperience, label: 'Años exp.' },
+  { icon: 'Users', value: `${(authorData.stats.petsHelped / 1000).toFixed(0)}k`, label: 'Mascotas' },
+  { icon: 'Heart', value: authorData.stats.brandsAnalyzed, label: 'Marcas' },
+];
+---
+
+<section class="py-20 bg-background">
+  <div class="container">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="relative">
+        <div class="relative bg-gradient-to-br from-primary/20 to-accent/20 rounded-3xl p-8 md:p-12">
+          <div class="text-center">
+            <span class="text-8xl md:text-9xl block mb-4">{authorData.image}</span>
+            <div class="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full">
+              <span class="h-2 w-2 rounded-full bg-rating-excellent animate-pulse"></span>
+              <span class="text-sm font-medium text-primary">Veterinario Certificado</span>
+            </div>
+          </div>
+
+          <div class="absolute -top-4 -right-4 bg-card shadow-card rounded-2xl p-4 border border-border">
+            <p class="text-2xl font-bold text-primary">35+</p>
+            <p class="text-xs text-muted-foreground">años de exp.</p>
+          </div>
+          <div class="absolute -bottom-4 -left-4 bg-card shadow-card rounded-2xl p-4 border border-border">
+            <p class="text-2xl font-bold text-accent">150+</p>
+            <p class="text-xs text-muted-foreground">reviews</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="text-primary font-medium text-sm uppercase tracking-wider mb-2 block">
+          Sobre el Autor
+        </span>
+        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">
+          {authorData.name}
+        </h2>
+        <p class="text-lg text-muted-foreground mb-6">
+          {authorData.bio}
+        </p>
+
+        <div class="grid grid-cols-4 gap-4 mb-8">
+          {stats.map((stat) => (
+            <div class="text-center p-3 bg-secondary/50 rounded-xl">
+              <svg class="h-5 w-5 mx-auto mb-2 text-primary" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                {stat.icon === 'BookOpen' && <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>}
+                {stat.icon === 'Award' && <><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></>}
+                {stat.icon === 'Users' && <><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></>}
+                {stat.icon === 'Heart' && <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>}
+              </svg>
+              <p class="font-bold text-lg">{stat.value}</p>
+              <p class="text-xs text-muted-foreground">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+
+        <a href="/autor" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 shadow-soft hover:shadow-hover hover:-translate-y-0.5 h-11 px-5 py-2">
+          Conoce mi historia
+          <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

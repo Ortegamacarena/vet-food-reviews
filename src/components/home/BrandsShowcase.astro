@@ -1,0 +1,43 @@
+---
+import brandsData from '@/data/brands.json';
+---
+
+<section class="py-20 bg-secondary/30">
+  <div class="container">
+    <div class="text-center mb-12">
+      <span class="text-primary font-medium text-sm uppercase tracking-wider mb-2 block">
+        Marcas Analizadas
+      </span>
+      <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">
+        Las Mejores Marcas del Mercado
+      </h2>
+      <p class="text-muted-foreground max-w-2xl mx-auto">
+        Analizamos las marcas más populares y premium para ayudarte a encontrar la mejor opción.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      {brandsData.slice(0, 8).map((brand) => (
+        <a href={`/marca/${brand.id}`} class="group bg-card rounded-xl p-6 flex flex-col items-center justify-center gap-3 card-hover border border-border min-h-[140px]">
+          <span class="text-4xl group-hover:scale-110 transition-transform duration-300">
+            {brand.logo}
+          </span>
+          <span class="font-medium text-sm text-center group-hover:text-primary transition-colors">
+            {brand.name}
+          </span>
+          <div class="flex items-center gap-1 text-xs">
+            <span class="text-rating-star">★</span>
+            <span class="text-muted-foreground">{brand.rating}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <div class="text-center">
+      <a href="/marcas" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-2 border-primary bg-transparent text-primary hover:bg-primary hover:text-primary-foreground h-11 px-5 py-2">
+        Ver todas las marcas
+        <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>

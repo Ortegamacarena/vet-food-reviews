@@ -1,0 +1,166 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import breedsData from '@/data/breeds.json';
+
+const urlParams = Astro.url.searchParams;
+const initialType = urlParams.get('type') || 'perros';
+---
+
+<Layout title="Guía de Razas | PetFood Expert">
+  <section class="bg-gradient-to-b from-secondary/50 to-background py-12">
+    <div class="container">
+      <div class="text-center">
+        <h1 class="text-4xl md:text-5xl font-heading font-bold mb-4">
+          Guía de Razas
+        </h1>
+        <p class="text-muted-foreground max-w-2xl mx-auto mb-8">
+          Descubre las características, necesidades nutricionales y consejos de alimentación para cada raza.
+        </p>
+
+        <div class="inline-flex bg-secondary rounded-xl p-1">
+          <button data-tab="perros" class={`tab-btn px-4 py-2 rounded-lg font-medium transition-all duration-200 ${initialType === 'perros' ? 'bg-primary text-primary-foreground' : ''}`}>
+            🐕 Perros
+          </button>
+          <button data-tab="gatos" class={`tab-btn px-4 py-2 rounded-lg font-medium transition-all duration-200 ${initialType === 'gatos' ? 'bg-primary text-primary-foreground' : ''}`}>
+            🐈 Gatos
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12">
+    <div class="container">
+      <p id="breed-count" class="text-muted-foreground mb-6"></p>
+
+      <div id="dogs-grid" class={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 ${initialType === 'perros' ? '' : 'hidden'}`}>
+        {breedsData.dogs.map((breed) => (
+          <article class="group">
+            <a href={`/raza/dog/${breed.id}`}>
+              <div class="bg-card rounded-2xl overflow-hidden card-hover border border-border">
+                <div class="relative h-40 flex items-center justify-center bg-gradient-to-br from-dog/10 to-dog/5">
+                  <span class="text-6xl group-hover:scale-110 transition-transform duration-300">
+                    {breed.image}
+                  </span>
+                  <div class="absolute top-3 right-3 px-2 py-1 rounded-full text-xs font-medium bg-dog-light text-dog">
+                    {breed.size}
+                  </div>
+                </div>
+
+                <div class="p-4">
+                  <h3 class="font-heading font-semibold text-base mb-2 group-hover:text-primary transition-colors">
+                    {breed.name}
+                  </h3>
+
+                  <div class="flex items-center gap-3 text-xs text-muted-foreground mb-3">
+                    <span class="flex items-center gap-1">
+                      <svg class="h-3 w-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                      {breed.lifespan}
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="h-3 w-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14 16-8-8-8 8"/><path d="m6 8 8 8 8-8"/></svg>
+                      {breed.exerciseNeeds}
+                    </span>
+                  </div>
+
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs text-muted-foreground">{breed.origin}</span>
+                    <span class="inline-flex items-center gap-1 text-xs font-medium text-primary group-hover:gap-2 transition-all">
+                      Ver más
+                      <svg class="h-3 w-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+
+      <div id="cats-grid" class={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 ${initialType === 'gatos' ? '' : 'hidden'}`}>
+        {breedsData.cats.map((breed) => (
+          <article class="group">
+            <a href={`/raza/cat/${breed.id}`}>
+              <div class="bg-card rounded-2xl overflow-hidden card-hover border border-border">
+                <div class="relative h-40 flex items-center justify-center bg-gradient-to-br from-cat/10 to-cat/5">
+                  <span class="text-6xl group-hover:scale-110 transition-transform duration-300">
+                    {breed.image}
+                  </span>
+                  <div class="absolute top-3 right-3 px-2 py-1 rounded-full text-xs font-medium bg-cat-light text-cat">
+                    {breed.size}
+                  </div>
+                </div>
+
+                <div class="p-4">
+                  <h3 class="font-heading font-semibold text-base mb-2 group-hover:text-primary transition-colors">
+                    {breed.name}
+                  </h3>
+
+                  <div class="flex items-center gap-3 text-xs text-muted-foreground mb-3">
+                    <span class="flex items-center gap-1">
+                      <svg class="h-3 w-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                      {breed.lifespan}
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="h-3 w-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14 16-8-8-8 8"/><path d="m6 8 8 8 8-8"/></svg>
+                      {breed.exerciseNeeds}
+                    </span>
+                  </div>
+
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs text-muted-foreground">{breed.origin}</span>
+                    <span class="inline-flex items-center gap-1 text-xs font-medium text-primary group-hover:gap-2 transition-all">
+                      Ver más
+                      <svg class="h-3 w-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script define:vars={{ dogsCount: breedsData.dogs.length, catsCount: breedsData.cats.length, initialType }}>
+  const tabs = document.querySelectorAll('.tab-btn');
+  const dogsGrid = document.getElementById('dogs-grid');
+  const catsGrid = document.getElementById('cats-grid');
+  const countDisplay = document.getElementById('breed-count');
+
+  function updateCount(type) {
+    const count = type === 'perros' ? dogsCount : catsCount;
+    if (countDisplay) {
+      countDisplay.textContent = `${count} razas de ${type}`;
+    }
+  }
+
+  updateCount(initialType);
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const type = tab.getAttribute('data-tab');
+
+      tabs.forEach(t => {
+        t.classList.remove('bg-primary', 'text-primary-foreground');
+      });
+      tab.classList.add('bg-primary', 'text-primary-foreground');
+
+      if (type === 'perros') {
+        dogsGrid?.classList.remove('hidden');
+        catsGrid?.classList.add('hidden');
+      } else {
+        dogsGrid?.classList.add('hidden');
+        catsGrid?.classList.remove('hidden');
+      }
+
+      updateCount(type);
+
+      const url = new URL(window.location.href);
+      url.searchParams.set('type', type);
+      window.history.pushState({}, '', url);
+    });
+  });
+</script>

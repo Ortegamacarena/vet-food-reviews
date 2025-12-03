@@ -1,0 +1,84 @@
+---
+import breedsData from '@/data/breeds.json';
+
+const topDogs = breedsData.dogs.slice(0, 3);
+const topCats = breedsData.cats.slice(0, 3);
+---
+
+<section class="py-20 bg-secondary/30">
+  <div class="container">
+    <div class="text-center mb-12">
+      <span class="text-primary font-medium text-sm uppercase tracking-wider mb-2 block">
+        Guía de Razas
+      </span>
+      <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">
+        Conoce Cada Raza
+      </h2>
+      <p class="text-muted-foreground max-w-2xl mx-auto">
+        Descubre las características, necesidades nutricionales y cuidados específicos de cada raza.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8 mb-8">
+      <div class="bg-card rounded-2xl p-6 border border-border">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="h-12 w-12 rounded-xl bg-dog-light flex items-center justify-center">
+            <span class="text-2xl">🐕</span>
+          </div>
+          <div>
+            <h3 class="font-heading font-semibold text-lg">Razas de Perros</h3>
+            <p class="text-sm text-muted-foreground">{breedsData.dogs.length} razas disponibles</p>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          {topDogs.map((breed) => (
+            <a href={`/raza/dog/${breed.id}`} class="flex items-center gap-3 p-3 rounded-xl hover:bg-dog-light/50 transition-colors group">
+              <span class="text-2xl">{breed.image}</span>
+              <div class="flex-1">
+                <p class="font-medium group-hover:text-dog transition-colors">{breed.name}</p>
+                <p class="text-xs text-muted-foreground">{breed.origin} • {breed.size}</p>
+              </div>
+              <svg class="h-4 w-4 text-muted-foreground group-hover:text-dog transition-colors" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          ))}
+        </div>
+
+        <a href="/razas?type=perros" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent/10 hover:text-accent-foreground w-full mt-4 text-dog hover:text-dog hover:bg-dog-light h-11 px-5 py-2">
+          Ver todas las razas de perros
+          <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="bg-card rounded-2xl p-6 border border-border">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="h-12 w-12 rounded-xl bg-cat-light flex items-center justify-center">
+            <span class="text-2xl">🐈</span>
+          </div>
+          <div>
+            <h3 class="font-heading font-semibold text-lg">Razas de Gatos</h3>
+            <p class="text-sm text-muted-foreground">{breedsData.cats.length} razas disponibles</p>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          {topCats.map((breed) => (
+            <a href={`/raza/cat/${breed.id}`} class="flex items-center gap-3 p-3 rounded-xl hover:bg-cat-light/50 transition-colors group">
+              <span class="text-2xl">{breed.image}</span>
+              <div class="flex-1">
+                <p class="font-medium group-hover:text-cat transition-colors">{breed.name}</p>
+                <p class="text-xs text-muted-foreground">{breed.origin} • {breed.size}</p>
+              </div>
+              <svg class="h-4 w-4 text-muted-foreground group-hover:text-cat transition-colors" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          ))}
+        </div>
+
+        <a href="/razas?type=gatos" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent/10 hover:text-accent-foreground w-full mt-4 text-cat hover:text-cat hover:bg-cat-light h-11 px-5 py-2">
+          Ver todas las razas de gatos
+          <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
